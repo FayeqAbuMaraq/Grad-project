@@ -45,8 +45,4 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-// مسارات AJAX لتحميل المواد والوحدات بناءً على الصف والمادة المحددة
-// تأكد أنها داخل مجموعة الـ admin أو أضف البريفكس المناسب
-Route::get('/admin/get-subjects/{grade_id}', [QuestionController::class, 'getSubjects']);
-Route::get('/admin/get-units/{subject_id}', [QuestionController::class, 'getUnits']);
 require __DIR__.'/auth.php';
