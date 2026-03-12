@@ -9,33 +9,30 @@ use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\student\StudentController;
+
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    
     // لوحة التحكم الرئيسية
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // إدارة الصفوف
     Route::resource('grades', GradeController::class);
     //ادارة الامتحانات
     Route::resource('exams', ExamController::class);
-
     // إدارة المواد
     Route::resource('subjects', SubjectController::class);
-
-    // // إدارة الوحدات الدراسية
+    // إدارة الوحدات الدراسية
     Route::resource('units', UnitController::class);
-
-    // // إدارة الأسئلة
+    // إدارة الأسئلة
     Route::resource('questions', QuestionController::class);
-    
     // مسار لعرض نتائج الطلاب
     Route::get('/results', [App\Http\Controllers\Admin\ResultController::class, 'index'])->name('results.index');
 });
 Route::middleware(['auth', 'role:student|admin'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('dashboard');
-    Route::view('/subjects', 'student.subjects')->name('subjects');
-    Route::view('/units', 'student.units')->name('units');
+    Route::get('/subjects', [StudentController::class, 'subjects'])->name('subjects');
+    Route::get('/subjects/{subject_id}/units', [StudentController::class, 'units'])->name('units');
     Route::view('/quiz', 'student.quiz')->name('quiz');
     Route::view('/quiz/result', 'student.quiz_result')->name('quiz.result');
     Route::view('/results', 'student.results')->name('results');
@@ -45,4 +42,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 require __DIR__.'/auth.php';
