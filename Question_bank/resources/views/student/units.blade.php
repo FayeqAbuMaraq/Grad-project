@@ -18,42 +18,41 @@
         </div>
     </nav>
 
-    <div class="container my-5">
-        <div class="text-center mb-5">
-            <div class="subject-badge mb-2">
-            <span id="subjectBadge" class="badge bg-primary mb-2">المادة</span>
-            </div>
-            <h2 class="fw-bold">اختر الوحدة للاختبار</h2>
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <div class="subject-badge mb-2">
+            <span id="subjectBadge" class="badge bg-primary mb-2">{{ $subject->name }}</span>
         </div>
-
-        <h5 class="fw-bold mb-3" style="text-align: center;">الفصل الأول</h5>
-        <div class="units-list mb-5">
-            <div class="unit-card reveal d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="unit-title">الوحدة 1: الأعداد الحقيقية</div>
-                    <div class="unit-meta">عدد الأسئلة 45 • المدة 45 دقيقة</div>
-                </div>
-                <a href="{{ route('student.quiz') }}" class="btn btn-start">ابدأ الاختبار</a>
-            </div><br>
-
-            <div class="unit-card reveal d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="unit-title">الوحدة 2: الهندسة والقياس</div>
-                    <div class="unit-meta">عدد الأسئلة 30 • المدة 35 دقيقة</div>
-                </div>
-                <a href="{{ route('student.quiz') }}" class="btn btn-start">ابدأ الاختبار</a>
-            </div>
-            <br>
-            <div class="unit-card reveal exam-card d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="unit-title">الاختبار النهائي</div>
-                    <div class="unit-meta">يغطي جميع وحدات الفصل الأول</div>
-                </div>
-                <a href="quiz.html" class="btn btn-start">ابدأ الاختبار</a>
-            </div>
-        </div>
-
-        <h5 class="fw-bold mb-2" style="text-align: center;">الفصل الثاني</h5>
-        <p class="text-muted text-center">سوف يتم عرض الفصل الثاني مع بداية الفصل الثاني</p>
+        <h2 class="fw-bold">اختر الوحدة للاختبار</h2>
     </div>
+
+    <h5 class="fw-bold mb-3" style="text-align: center;">الفصل الأول</h5>
+    <div class="units-list mb-5">
+        
+        @forelse($units as $unit)
+            <div class="unit-card reveal d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <div class="unit-title">{{ $unit->name }}</div>
+                    <div class="unit-meta">
+                        عدد الأسئلة 20 • المدة 30 دقيقة
+                    </div>
+                </div>
+                <a href="{{ route('student.quiz', ['unit_id' => $unit->id]) }}" class="btn btn-start">ابدأ الاختبار</a>
+            </div>
+        @empty
+            <p class="text-center">لا توجد وحدات مضافة لهذه المادة بعد.</p>
+        @endforelse
+
+        <div class="unit-card reveal exam-card d-flex justify-content-between align-items-center">
+            <div>
+                <div class="unit-title">الاختبار النهائي</div>
+                <div class="unit-meta">يغطي جميع وحدات الفصل الأول</div>
+            </div>
+            <a href="#" class="btn btn-start">ابدأ الاختبار</a>
+        </div>
+    </div>
+
+    <h5 class="fw-bold mb-2" style="text-align: center;">الفصل الثاني</h5>
+    <p class="text-muted text-center">سوف يتم عرض الفصل الثاني مع بداية الفصل الثاني</p>
+</div>
 @endsection
